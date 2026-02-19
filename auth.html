@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="kk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKZHAR - Кіру</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg { 
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); 
+            background-size: cover; background-position: center; 
+        }
+        .form-enter { animation: fadeUp 0.4s ease-out forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="hero-bg h-screen flex items-center justify-center px-4">
+
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden form-enter border-t-4 border-[#a6140c]">
+        
+        <div class="flex border-b border-gray-200">
+            <button id="tab-login" class="w-1/2 py-4 font-bold text-[#a6140c] border-b-2 border-[#a6140c] bg-gray-50 transition cursor-pointer">Кіру</button>
+            <button id="tab-register" class="w-1/2 py-4 font-bold text-gray-400 hover:text-black transition cursor-pointer">Тіркелу</button>
+        </div>
+
+        <div class="p-8">
+            <h2 id="form-title" class="text-2xl font-black text-center mb-6 text-black">Қош келдіңіз!</h2>
+
+            <button type="button" id="google-btn" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-black font-bold py-3 rounded-lg hover:bg-gray-50 transition mb-4 shadow-sm">
+                <svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+                Google арқылы кіру
+            </button>
+
+            <div class="flex items-center my-6">
+                <div class="flex-grow border-t border-gray-300"></div>
+                <span class="px-3 text-gray-400 text-xs font-bold uppercase tracking-widest">Немесе</span>
+                <div class="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            <form id="authForm" class="space-y-4">
+                <div id="name-field" class="hidden">
+                    <label class="text-xs font-bold text-gray-500 uppercase">Аты-жөні</label>
+                    <input type="text" id="name" class="w-full bg-[#efefef] border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#a6140c]" placeholder="Есіміңіз...">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-gray-500 uppercase">Email</label>
+                    <input type="email" id="email" required class="w-full bg-[#efefef] border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#a6140c]" placeholder="name@mail.com">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-gray-500 uppercase">Құпия сөз</label>
+                    <input type="password" id="password" required class="w-full bg-[#efefef] border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#a6140c]" placeholder="Кем дегенде 6 белгі">
+                </div>
+
+                <div id="error-msg" class="text-[#a6140c] text-sm font-bold text-center hidden"></div>
+
+                <button type="submit" id="submit-btn" class="w-full bg-[#a6140c] text-white font-bold py-3 rounded-lg hover:bg-[#8a100a] transition transform hover:scale-[1.02]">
+                    Кіру
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center text-xs text-gray-400">
+                <a href="index.html" class="hover:text-[#a6140c] underline">← Басты бетке қайту</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Сенің Firebase баптауларың
+        const firebaseConfig = {
+            apiKey: "AIzaSyC3wI2LIzZigYXZpIQ242jbpU5shEJQTLE",
+            authDomain: "niceeeeer1-7d744.firebaseapp.com",
+            projectId: "niceeeeer1-7d744",
+            storageBucket: "niceeeeer1-7d744.firebasestorage.app",
+            messagingSenderId: "447166649357",
+            appId: "1:447166649357:web:512194bad59ac5868a7144",
+            measurementId: "G-3P2M4HTFW6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // UI Элементтері
+        let isLoginMode = true;
+        const tabLogin = document.getElementById('tab-login');
+        const tabRegister = document.getElementById('tab-register');
+        const formTitle = document.getElementById('form-title');
+        const submitBtn = document.getElementById('submit-btn');
+        const nameField = document.getElementById('name-field');
+        const errorMsg = document.getElementById('error-msg');
+        const authForm = document.getElementById('authForm');
+        const googleBtn = document.getElementById('google-btn');
+
+        // Табтарды ауыстыру логикасы
+        function switchTab(mode) {
+            isLoginMode = (mode === 'login');
+            tabLogin.className = isLoginMode ? "w-1/2 py-4 font-bold text-[#a6140c] border-b-2 border-[#a6140c] bg-gray-50 transition cursor-pointer" : "w-1/2 py-4 font-bold text-gray-400 hover:text-black transition cursor-pointer";
+            tabRegister.className = !isLoginMode ? "w-1/2 py-4 font-bold text-[#a6140c] border-b-2 border-[#a6140c] bg-gray-50 transition cursor-pointer" : "w-1/2 py-4 font-bold text-gray-400 hover:text-black transition cursor-pointer";
+            
+            if (isLoginMode) {
+                formTitle.innerText = "Қош келдіңіз!";
+                submitBtn.innerText = "Кіру";
+                nameField.classList.add('hidden');
+            } else {
+                formTitle.innerText = "Тіркелу";
+                submitBtn.innerText = "Тіркелу";
+                nameField.classList.remove('hidden');
+            }
+            errorMsg.classList.add('hidden');
+        }
+
+        tabLogin.addEventListener('click', () => switchTab('login'));
+        tabRegister.addEventListener('click', () => switchTab('register'));
+
+        // 1. GOOGLE АРҚЫЛЫ КІРУ
+        googleBtn.addEventListener('click', () => {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    // Пайдаланушы атын LocalStorage-қа сақтаймыз (сайттың басқа беттерінде аты көрініп тұруы үшін)
+                    localStorage.setItem('currentUser', user.email);
+                    localStorage.setItem(user.email, JSON.stringify({name: user.displayName || 'Қолданушы'}));
+                    window.location.href = 'resources.html';
+                }).catch((error) => {
+                    errorMsg.innerText = "Google қатесі: " + error.message;
+                    errorMsg.classList.remove('hidden');
+                });
+        });
+
+        // 2. EMAIL ЖӘНЕ ПАРОЛЬ АРҚЫЛЫ ТІРКЕЛУ / КІРУ
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+
+            submitBtn.innerText = "Күте тұрыңыз...";
+            submitBtn.disabled = true;
+
+            if (!isLoginMode) {
+                // ТІРКЕЛУ
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        localStorage.setItem('currentUser', user.email);
+                        localStorage.setItem(user.email, JSON.stringify({name: name || 'Қолданушы'}));
+                        alert('Сәтті тіркелдіңіз!');
+                        window.location.href = 'resources.html';
+                    })
+                    .catch((error) => {
+                        if(error.code === 'auth/email-already-in-use') errorMsg.innerText = "Бұл Email тіркелген!";
+                        else if(error.code === 'auth/weak-password') errorMsg.innerText = "Құпия сөз тым оңай (кемі 6 белгі)";
+                        else errorMsg.innerText = error.message;
+                        
+                        errorMsg.classList.remove('hidden');
+                        submitBtn.innerText = "Тіркелу";
+                        submitBtn.disabled = false;
+                    });
+            } else {
+                // КІРУ
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        localStorage.setItem('currentUser', user.email);
+                        window.location.href = 'resources.html';
+                    })
+                    .catch((error) => {
+                        errorMsg.innerText = "Email немесе құпия сөз қате!";
+                        errorMsg.classList.remove('hidden');
+                        submitBtn.innerText = "Кіру";
+                        submitBtn.disabled = false;
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
