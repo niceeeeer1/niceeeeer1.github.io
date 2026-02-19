@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="kk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKZHAR - Бейнесабақтар</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+
+        /* --- Hover Line Animation --- */
+        .nav-link { position: relative; padding-bottom: 4px; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #a6140c; transition: width 0.3s ease-out; }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active::after { width: 100%; }
+    </style>
+</head>
+<body class="bg-[#efefef] text-[#000000] pt-24">
+
+    <nav class="bg-[#ffffff]/95 backdrop-blur-md border-b border-[#a6140c] fixed top-0 w-full z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-black tracking-tighter text-[#000000] flex items-center gap-2 hover:text-[#a6140c] transition">
+                AKZHAR.
+            </a>
+            <div class="hidden md:flex space-x-10 text-sm font-bold uppercase tracking-wide text-[#000000]">
+                <a href="index.html" class="nav-link hover:text-[#a6140c] transition">Басты бет</a>
+                <a href="about.html" class="nav-link hover:text-[#a6140c] transition">Жоба туралы</a>
+                <a href="criteria.html" class="nav-link hover:text-[#a6140c] transition">Бағалау</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-6 max-w-6xl mb-24">
+        
+        <div class="text-center mb-16" data-aos="fade-up">
+            <span class="text-xs font-bold tracking-[0.3em] text-[#a6140c] uppercase mb-4 block">Эксклюзив</span>
+            <h1 class="text-4xl font-black tracking-tight text-[#000000] mb-6">Бейнесабақтар</h1>
+            <p class="text-gray-600">Практикалық тапсырмаларды орындауға арналған арнайы нұсқаулықтар.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg border border-transparent hover:border-[#a6140c] transition duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                <div class="relative bg-black h-56 flex items-center justify-center group-hover:opacity-90 transition">
+                    <span class="text-4xl text-white">▶</span>
+                </div>
+                <div class="p-8">
+                    <span class="text-xs font-bold text-[#a6140c] uppercase mb-2 block">1-Сабақ</span>
+                    <h3 class="text-xl font-bold mb-3">ChatGPT-мен жұмыс</h3>
+                    <p class="text-gray-500 text-sm">Сабақ жоспарын 5 минутта құрудың әдістері. Промпт жазу техникасы.</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg border border-transparent hover:border-[#a6140c] transition duration-300 group" data-aos="fade-up" data-aos-delay="200">
+                <div class="relative bg-black h-56 flex items-center justify-center group-hover:opacity-90 transition">
+                    <span class="text-4xl text-white">▶</span>
+                </div>
+                <div class="p-8">
+                    <span class="text-xs font-bold text-[#a6140c] uppercase mb-2 block">2-Сабақ</span>
+                    <h3 class="text-xl font-bold mb-3">Gamma App презентация</h3>
+                    <p class="text-gray-500 text-sm">Көрнекі презентацияларды нейрожелі көмегімен автоматты түрде жасау.</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg border border-transparent hover:border-[#a6140c] transition duration-300 group" data-aos="fade-up" data-aos-delay="300">
+                <div class="relative bg-black h-56 flex items-center justify-center group-hover:opacity-90 transition">
+                    <span class="text-4xl text-white">▶</span>
+                </div>
+                <div class="p-8">
+                    <span class="text-xs font-bold text-[#a6140c] uppercase mb-2 block">3-Сабақ</span>
+                    <h3 class="text-xl font-bold mb-3">Twee арқылы тест құру</h3>
+                    <p class="text-gray-500 text-sm">Мәтіннен немесе видеодан дайын тест сұрақтарын генерациялау.</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg border border-transparent hover:border-[#a6140c] transition duration-300 group" data-aos="fade-up" data-aos-delay="400">
+                <div class="relative bg-black h-56 flex items-center justify-center group-hover:opacity-90 transition">
+                    <span class="text-4xl text-white">▶</span>
+                </div>
+                <div class="p-8">
+                    <span class="text-xs font-bold text-[#a6140c] uppercase mb-2 block">4-Сабақ</span>
+                    <h3 class="text-xl font-bold mb-3">Quizizz AI викторинасы</h3>
+                    <p class="text-gray-500 text-sm">Оқушыларды бағалауға арналған интерактивті ойындар.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-[#000000] text-[#ffffff] py-16 text-center mt-12">
+        <h2 class="text-3xl font-black tracking-tighter mb-4 text-[#ffffff]">AKZHAR<span class="text-[#a6140c]">.</span></h2>
+        <div class="w-16 h-1 bg-[#a6140c] mx-auto mb-6"></div>
+        <p class="text-gray-500 text-xs uppercase tracking-widest">&copy; 2026 Барлық құқықтар қорғалған</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script> AOS.init({ duration: 800, once: true }); </script>
+</body>
+</html>
