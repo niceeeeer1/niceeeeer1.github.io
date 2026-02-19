@@ -9,7 +9,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
         
-        /* Боковой скроллды алып тастау */
         html, body { 
             font-family: 'Inter', sans-serif; 
             -webkit-font-smoothing: antialiased; 
@@ -17,27 +16,28 @@
             width: 100%; 
         }
         
-        /* --- BACKGROUND VIDEO STYLES --- */
         .video-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85); /* 85% қарайту */
+            background: rgba(0, 0, 0, 0.85); 
             z-index: -1;
         }
 
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #a6140c; transition: width 0.3s ease-out; }
         .nav-link:hover::after { width: 100%; }
         
-        /* Tab Animation */
-        .tab-content { display: none; animation: fadeIn 0.5s; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease-out forwards; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Скроллбар для мобильных табов */
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
     <script>
-        // --- ҚАУІПСІЗДІК: Авторизациясыз кіргізбеу ---
         if (!localStorage.getItem('currentUser')) {
             window.location.href = 'auth.html';
         }
@@ -48,22 +48,16 @@
     <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-cover -z-20 hidden md:block" poster="images/bg-poster.jpg">
         <source src="videos/background.mp4" type="video/mp4">
     </video>
-
     <div class="fixed top-0 left-0 w-full h-full object-cover -z-20 md:hidden" style="background: url('images/bg-poster.jpg') center/cover;"></div>
-
     <div class="video-overlay"></div>
 
     <nav id="navbar" class="bg-[#000000]/80 backdrop-blur-md border-b border-[#a6140c] fixed top-0 w-full z-50">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center relative z-50">
-            <a href="index.html" class="text-2xl font-black tracking-tighter text-[#ffffff] hover:text-[#a6140c] transition">
-                AKZHAR.
-            </a>
-            
+            <a href="index.html" class="text-2xl font-black tracking-tighter text-[#ffffff] hover:text-[#a6140c] transition">AKZHAR.</a>
             <div class="hidden md:flex items-center gap-6">
                 <span id="userName" class="text-gray-300 text-sm font-bold"></span>
                 <button onclick="logout()" class="text-[#a6140c] font-bold text-sm border border-[#a6140c] px-4 py-1 rounded hover:bg-[#a6140c] hover:text-white transition">Шығу</button>
             </div>
-
             <div class="md:hidden flex items-center gap-4">
                 <button onclick="logout()" class="text-[#a6140c] font-bold text-xs border border-[#a6140c] px-3 py-1 rounded">Шығу</button>
                 <button id="mobile-btn" class="text-white focus:outline-none hover:text-[#a6140c] transition">
@@ -82,7 +76,7 @@
         </div>
     </nav>
 
-    <div class="container mx-auto px-6 max-w-6xl mb-24 relative z-10">
+    <div class="container mx-auto px-6 max-w-7xl mb-24 relative z-10">
         
         <div class="text-center mb-12 mt-8" data-aos="fade-up">
             <span class="text-xs font-bold tracking-[0.3em] text-[#a6140c] bg-white/10 backdrop-blur px-4 py-1 rounded mb-4 inline-block uppercase">Premium Access</span>
@@ -91,29 +85,29 @@
                 Оқу материалдары
             </h1>
             
-            <div class="flex justify-center gap-4 border-b border-gray-600 pb-4 max-w-md mx-auto mt-4">
-                <button onclick="showTab('videos')" id="btn-videos" class="text-lg font-bold pb-2 border-b-4 border-[#a6140c] text-white transition">Бейнесабақтар</button>
-                <button onclick="showTab('prompts')" id="btn-prompts" class="text-lg font-bold pb-2 border-b-4 border-transparent text-gray-400 hover:text-white transition">Промпттар</button>
+            <div class="flex justify-start md:justify-center gap-6 border-b border-gray-600 pb-4 max-w-2xl mx-auto mt-4 overflow-x-auto hide-scroll whitespace-nowrap px-2">
+                <button onclick="showTab('videos')" id="btn-videos" class="text-base md:text-lg font-bold pb-2 border-b-4 border-[#a6140c] text-white transition">Бейнесабақтар</button>
+                <button onclick="showTab('prompts')" id="btn-prompts" class="text-base md:text-lg font-bold pb-2 border-b-4 border-transparent text-gray-400 hover:text-white transition">Промпттар</button>
+                <button onclick="showTab('platforms')" id="btn-platforms" class="text-base md:text-lg font-bold pb-2 border-b-4 border-transparent text-gray-400 hover:text-white transition flex items-center gap-2">Платформалар <span class="text-xl">🚀</span></button>
             </div>
         </div>
 
-        <div id="tab-videos" class="tab-content active">
+        <div id="tab-videos" class="tab-content active max-w-6xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
                 <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl overflow-hidden shadow-2xl group hover:border-[#a6140c] transition md:col-span-2">
                     <div class="bg-black aspect-video w-full relative">
-                        <iframe src="https://drive.google.com/file/d/1uH8IQt7C_fYOb_FgQsAqmDKa4V73H4g2/preview" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        <iframe src="https://drive.google.com/file/d/ВИДЕО_0_ID/preview" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="p-8">
                         <span class="text-[#a6140c] font-bold text-xs uppercase">0-Сабақ (Кіріспе)</span>
                         <h3 class="text-2xl font-bold mt-2 text-white">Платформаларға шолу</h3>
-                        <p class="text-gray-300 text-base mt-2">Курс барысында қолданылатын 4 негізгі платформаның (ChatGPT, Gamma, Twee, Quizizz) мүмкіндіктерімен танысу.</p>
+                        <p class="text-gray-300 text-base mt-2">Курс барысында қолданылатын негізгі платформалардың мүмкіндіктерімен танысу.</p>
                     </div>
                 </div>
 
                 <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl overflow-hidden shadow-2xl group hover:border-[#a6140c] transition">
                     <div class="bg-black aspect-video w-full relative">
-                        <iframe src="https://drive.google.com/file/d/12w7g2edAmRgKwZqHYzHC6kqIzuHDmL_r/preview" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        <iframe src="https://drive.google.com/file/d/ВИДЕО_1_ID/preview" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="p-6">
                         <span class="text-[#a6140c] font-bold text-xs uppercase">1-Сабақ</span>
@@ -124,7 +118,7 @@
 
                 <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl overflow-hidden shadow-2xl group hover:border-[#a6140c] transition">
                     <div class="bg-black aspect-video w-full relative">
-                        <iframe src="https://drive.google.com/file/d/1s2KjjPHCQkVsjl3SJRotJ0GPAWgQs0kM/preview" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        <iframe src="https://drive.google.com/file/d/ВИДЕО_2_ID/preview" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="p-6">
                         <span class="text-[#a6140c] font-bold text-xs uppercase">2-Сабақ</span>
@@ -135,76 +129,159 @@
 
                 <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl overflow-hidden shadow-2xl group hover:border-[#a6140c] transition">
                     <div class="bg-black aspect-video w-full relative">
-                        <iframe src="https://drive.google.com/file/d/1y4NP_f5Aub3lDtfUvv1w5PNB4bDYJ6xg/preview" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        <iframe src="https://drive.google.com/file/d/ВИДЕО_3_ID/preview" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="p-6">
                         <span class="text-[#a6140c] font-bold text-xs uppercase">3-Сабақ</span>
                         <h3 class="text-xl font-bold mt-2 text-white">Genially: Интерактивті әлем</h3>
-                        <p class="text-gray-300 text-sm mt-2">Жай ғана презентация емес, басылатын батырмалары, жасырын терезелері және ойын элементтері бар тірі оқу материалына айналдырыңыз.</p>
+                        <p class="text-gray-300 text-sm mt-2">Оқушыларды таңқалдыратын жанды презентациялар мен квесттер құру.</p>
                     </div>
                 </div>
 
                 <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl overflow-hidden shadow-2xl group hover:border-[#a6140c] transition">
                     <div class="bg-black aspect-video w-full relative">
-                        <iframe src="https://drive.google.com/file/d/1GH25PnouxhgY5tugsWt5vR2G_9ZVD7ld/preview" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        <iframe src="https://drive.google.com/file/d/ВИДЕО_4_ID/preview" class="absolute top-0 left-0 w-full h-full" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="p-6">
                         <span class="text-[#a6140c] font-bold text-xs uppercase">4-Сабақ</span>
-                        <h3 class="text-xl font-bold mt-2 text-white">Educaplay: Ойын арқылы оқыту</h3>
-                        <p class="text-gray-300 text-sm mt-2">Бірнеше минут ішінде кез келген тақырыпты қызықты онлайн ойынға айналдырып, оқушылардың білімін жарыс түрінде тексеріңіз.</p>
+                        <h3 class="text-xl font-bold mt-2 text-white">Educaplay & Quizizz</h3>
+                        <p class="text-gray-300 text-sm mt-2">Жылдам әрі қызықты викториналар, ойындар және бағалау жүйесі.</p>
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <div id="tab-prompts" class="tab-content text-black"> 
+        <div id="tab-prompts" class="tab-content text-black max-w-6xl mx-auto"> 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300">
-                    <h3 class="font-bold text-lg mb-3">📝 Сабақ жоспары</h3>
-                    <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Маған [Пән] пәнінен [Сынып] сыныбына арналған "[Тақырып]" тақырыбы бойынша Қысқа Мерзімді Жоспар (ҚМЖ) жасап бер.</div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition">Көшіру</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3">📝 Сабақ жоспары</h3>
+                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Маған [Пән] пәнінен [Сынып] сыныбына арналған "[Тақырып]" тақырыбы бойынша Қысқа Мерзімді Жоспар (ҚМЖ) жасап бер.</div>
+                    </div>
+                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300">
-                    <h3 class="font-bold text-lg mb-3">✅ Тест құру</h3>
-                    <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Төмендегі мәтін негізінде [Сынып] сыныбына арналған 5 тест сұрағын құрастыр. Әр сұрақта 4 жауап нұсқасы болсын.</div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition">Көшіру</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3">✅ Тест құру</h3>
+                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Төмендегі мәтін негізінде [Сынып] сыныбына арналған 5 тест сұрағын құрастыр. Әр сұрақта 4 жауап нұсқасы болсын.</div>
+                    </div>
+                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300">
-                    <h3 class="font-bold text-lg mb-3">💡 Сергіту сәті</h3>
-                    <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">[Тақырып] тақырыбына қатысты 5 минуттық қызықты, балаларды қозғалысқа келтіретін сергіту ойынының идеясын ұсын.</div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition">Көшіру</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3">💡 Сергіту сәті</h3>
+                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">[Тақырып] тақырыбына қатысты 5 минуттық қызықты, балаларды қозғалысқа келтіретін сергіту ойынының идеясын ұсын.</div>
+                    </div>
+                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                 <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300">
-                    <h3 class="font-bold text-lg mb-3">👶 Түсіндіру</h3>
-                    <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Маған [Күрделі термин] туралы 10 жасар балаға түсіндіргендей қарапайым мысалдармен (аналогиямен) жазып бер.</div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition">Көшіру</button>
+                 <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3">👶 Түсіндіру</h3>
+                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Маған [Күрделі термин] туралы 10 жасар балаға түсіндіргендей қарапайым мысалдармен (аналогиямен) жазып бер.</div>
+                    </div>
+                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300">
-                    <h3 class="font-bold text-lg mb-3">📊 Рубрика жасау</h3>
-                    <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">"[Жоба/Эссе тақырыбы]" бойынша оқушыларды бағалауға арналған кесте (рубрика) жасап бер. Критерийлер: Мазмұны, Дизайны.</div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition">Көшіру</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3">📊 Рубрика жасау</h3>
+                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">"[Жоба/Эссе тақырыбы]" бойынша оқушыларды бағалауға арналған кесте (рубрика) жасап бер. Критерийлер: Мазмұны, Дизайны.</div>
+                    </div>
+                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300">
-                    <h3 class="font-bold text-lg mb-3">📩 Ата-анаға хат</h3>
-                    <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Оқушының үлгерімі төмендеп кеткені туралы ата-анасына сыпайы, бірақ ресми ескерту хатын жазып бер.</div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition">Көшіру</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3">📩 Ата-анаға хат</h3>
+                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Оқушының үлгерімі төмендеп кеткені туралы ата-анасына сыпайы, бірақ ресми ескерту хатын жазып бер.</div>
+                    </div>
+                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300">
-                    <h3 class="font-bold text-lg mb-3">🧩 Саралау (Diff)</h3>
-                    <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">"[Тақырып]" тақырыбы бойынша А (оңай), В (орташа), С (күрделі) деңгейіндегі 3 түрлі тапсырма құрастыр.</div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition">Көшіру</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3">🧩 Саралау (Diff)</h3>
+                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">"[Тақырып]" тақырыбы бойынша А (оңай), В (орташа), С (күрделі) деңгейіндегі 3 түрлі тапсырма құрастыр.</div>
+                    </div>
+                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300">
-                    <h3 class="font-bold text-lg mb-3">💬 Кері байланыс</h3>
-                    <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Эссеге "Сэндвич әдісі" (мақтау - түзету - мақтау) бойынша конструктивті кері байланыс үлгісін жазып бер.</div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition">Көшіру</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3">💬 Кері байланыс</h3>
+                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Эссеге "Сэндвич әдісі" (мақтау - түзету - мақтау) бойынша конструктивті кері байланыс үлгісін жазып бер.</div>
+                    </div>
+                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300">
-                    <h3 class="font-bold text-lg mb-3">🧠 Блум таксономиясы</h3>
-                    <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">"[Тақырып]" тақырыбы бойынша Блум таксономиясының 6 деңгейіне (білу, түсіну, қолдану, талдау, жинақтау, бағалау) сәйкес бір-бір сұрақтан құрастырып бер.</div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition">Көшіру</button>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3">🧠 Блум таксономиясы</h3>
+                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">"[Тақырып]" бойынша Блум таксономиясының 6 деңгейіне (білу, түсіну, қолдану, талдау, жинақтау, бағалау) 1-1 сұрақтан құрастырып бер.</div>
+                    </div>
+                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
+            </div>
+        </div>
+
+        <div id="tab-platforms" class="tab-content text-white">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">🎮</div><h3 class="font-bold text-white text-lg mb-1">Kahoot!</h3><p class="text-gray-400 text-xs mb-4">Интерактивті викториналар мен жарыстар.</p></div>
+                    <a href="https://kahoot.com/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">🧩</div><h3 class="font-bold text-white text-lg mb-1">Wordwall</h3><p class="text-gray-400 text-xs mb-4">Өз сөздеріңізбен ойындар мен жаттығулар.</p></div>
+                    <a href="https://wordwall.net/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">📇</div><h3 class="font-bold text-white text-lg mb-1">Quizlet</h3><p class="text-gray-400 text-xs mb-4">Флешкарталар мен терминдерді жаттау.</p></div>
+                    <a href="https://quizlet.com/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">📌</div><h3 class="font-bold text-white text-lg mb-1">Padlet</h3><p class="text-gray-400 text-xs mb-4">Студенттерге арналған ортақ виртуалды тақта.</p></div>
+                    <a href="https://padlet.com/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">🎨</div><h3 class="font-bold text-white text-lg mb-1">Canva</h3><p class="text-gray-400 text-xs mb-4">Оңай дизайн, постер және презентациялар.</p></div>
+                    <a href="https://www.canva.com/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">🗺️</div><h3 class="font-bold text-white text-lg mb-1">Miro</h3><p class="text-gray-400 text-xs mb-4">Топтық жобаларға арналған шексіз тақта.</p></div>
+                    <a href="https://miro.com/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">🎬</div><h3 class="font-bold text-white text-lg mb-1">Edpuzzle</h3><p class="text-gray-400 text-xs mb-4">Видеолардың ішіне сұрақтар мен тесттер қосу.</p></div>
+                    <a href="https://edpuzzle.com/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">📊</div><h3 class="font-bold text-white text-lg mb-1">Mentimeter</h3><p class="text-gray-400 text-xs mb-4">Жанды сауалнамалар және сөз бұлттары.</p></div>
+                    <a href="https://www.mentimeter.com/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">👾</div><h3 class="font-bold text-white text-lg mb-1">ClassDojo</h3><p class="text-gray-400 text-xs mb-4">Мінез-құлықты бағалау және ата-анамен байланыс.</p></div>
+                    <a href="https://www.classdojo.com/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">🧠</div><h3 class="font-bold text-white text-lg mb-1">Perplexity AI</h3><p class="text-gray-400 text-xs mb-4">Іздеуге арналған ең мықты жасанды интеллект.</p></div>
+                    <a href="https://www.perplexity.ai/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">🎵</div><h3 class="font-bold text-white text-lg mb-1">Suno AI</h3><p class="text-gray-400 text-xs mb-4">Мәтін жазып, оны өлең мен музыкаға айналдыру.</p></div>
+                    <a href="https://suno.com/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition group flex flex-col justify-between h-full">
+                    <div><div class="text-3xl mb-3">🖼️</div><h3 class="font-bold text-white text-lg mb-1">Midjourney</h3><p class="text-gray-400 text-xs mb-4">Мәтіннен ең жоғары сапада сурет генерациялау.</p></div>
+                    <a href="https://www.midjourney.com/" target="_blank" class="w-full block text-center bg-black/60 text-white py-2 rounded font-bold hover:bg-[#a6140c] transition text-xs uppercase tracking-wider">Ашу ↗</a>
+                </div>
+
             </div>
         </div>
 
@@ -214,7 +291,6 @@
     <script>
         AOS.init();
 
-        // User Name Display (Local Storage-тан атын алу)
         const email = localStorage.getItem('currentUser');
         const userDataString = localStorage.getItem(email);
         if(userDataString) {
@@ -225,30 +301,30 @@
             }
         }
 
-        // Logout
         function logout() {
             localStorage.removeItem('currentUser');
             window.location.href = 'index.html';
         }
 
-        // Tabs Logic
+        // --- ЖАҢАРТЫЛҒАН TABS ЛОГИКАСЫ (3 Вкладка) ---
         function showTab(tab) {
+            // Барлық контентті жасыру
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            // Таңдалғанын көрсету
             document.getElementById('tab-' + tab).classList.add('active');
 
-            const btnV = document.getElementById('btn-videos');
-            const btnP = document.getElementById('btn-prompts');
-            
-            if(tab === 'videos') {
-                btnV.className = "text-lg font-bold pb-2 border-b-4 border-[#a6140c] text-white transition";
-                btnP.className = "text-lg font-bold pb-2 border-b-4 border-transparent text-gray-400 hover:text-white transition";
-            } else {
-                btnP.className = "text-lg font-bold pb-2 border-b-4 border-[#a6140c] text-white transition";
-                btnV.className = "text-lg font-bold pb-2 border-b-4 border-transparent text-gray-400 hover:text-white transition";
-            }
+            // Барлық батырмалардың дизайнын қалпына келтіру
+            const tabs = ['videos', 'prompts', 'platforms'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('btn-' + t);
+                if(t === tab) {
+                    btn.className = "text-base md:text-lg font-bold pb-2 border-b-4 border-[#a6140c] text-white transition " + (t === 'platforms' ? "flex items-center gap-2" : "");
+                } else {
+                    btn.className = "text-base md:text-lg font-bold pb-2 border-b-4 border-transparent text-gray-400 hover:text-white transition " + (t === 'platforms' ? "flex items-center gap-2" : "");
+                }
+            });
         }
 
-        // Copy Text Function
         function copyText(btn) {
             const text = btn.previousElementSibling.innerText;
             navigator.clipboard.writeText(text);
@@ -261,7 +337,6 @@
             }, 2000);
         }
 
-        // --- ЛОГИКА ДЛЯ МОБИЛЬНОГО МЕНЮ ---
         const mobileBtn = document.getElementById('mobile-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileIcon = document.getElementById('mobile-icon');
@@ -283,5 +358,4 @@
         }
     </script>
 </body>
-
 </html>
