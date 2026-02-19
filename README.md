@@ -1,1 +1,283 @@
-# niceeeeer1.github.io
+<!DOCTYPE html>
+<html lang="kk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKZHAR - Басты бет</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        
+        /* CSS Animations */
+        #preloader { transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); will-change: transform; }
+        nav { transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); }
+        
+        @keyframes revealLetter { from { opacity: 0; transform: translateX(-20px); filter: blur(10px); } to { opacity: 1; transform: translateX(0); filter: blur(0); } }
+        .letter { display: inline-block; opacity: 0; animation: revealLetter forwards; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+        .slow-letter { animation-duration: 1.5s; animation-timing-function: ease-out; }
+        .fast-letter { animation-duration: 0.6s; animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.4s; } .delay-3 { animation-delay: 1.0s; } .delay-4 { animation-delay: 1.1s; } .delay-5 { animation-delay: 1.2s; } .delay-6 { animation-delay: 1.3s; }
+        
+        @keyframes syncLine { 0% { width: 0%; } 50% { width: 35%; animation-timing-function: ease-out; } 100% { width: 100%; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); } }
+        .animate-line-sync { animation: syncLine 1.6s forwards; animation-delay: 0.1s; }
+
+        .modal-enter { animation: fadeUp 0.3s ease-out forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        .nav-link { position: relative; padding-bottom: 4px; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #a6140c; transition: width 0.3s ease-out; }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active::after { width: 100%; }
+
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .faq-item.active .faq-content { max-height: 200px; }
+        .faq-item.active .faq-icon { transform: rotate(180deg); color: #a6140c; }
+    </style>
+</head>
+<body class="bg-[#efefef] text-[#000000] overflow-hidden" id="main-body">
+
+    <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-cover -z-20 hidden md:block" poster="images/bg-poster.jpg">
+        <source src="videos/background.mp4" type="video/mp4">
+    </video>
+
+    <div class="fixed top-0 left-0 w-full h-full object-cover -z-20 md:hidden" style="background: url('images/bg-poster.jpg') center/cover;"></div>
+
+    <div class="fixed top-0 left-0 w-full h-full bg-black/70 -z-10"></div>
+
+
+    <div id="loginModal" class="hidden fixed inset-0 z-[200] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-sm w-full relative border-t-4 border-[#a6140c] shadow-2xl modal-enter">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-[#a6140c] transition text-2xl font-bold">&times;</button>
+            <div class="p-8 text-center">
+                <div class="w-16 h-16 bg-[#efefef] rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="text-3xl">🔒</span>
+                </div>
+                <h2 class="text-2xl font-black mb-2 text-[#000000]">Кіру</h2>
+                <p class="text-gray-500 text-sm mb-6">Бейнесабақтарды көру үшін құпия сөзді енгізіңіз.</p>
+                <form onsubmit="checkLogin(event)" class="space-y-4">
+                    <input type="password" id="passwordInput" placeholder="Құпия сөз..." class="w-full bg-[#efefef] border border-gray-200 text-[#000000] rounded-lg px-4 py-3 focus:outline-none focus:border-[#a6140c] transition">
+                    <button type="submit" class="w-full bg-[#a6140c] text-white font-bold py-3 rounded-lg hover:bg-[#8a100a] transition transform hover:scale-[1.02]">Кіру</button>
+                    <p id="errorMsg" class="text-[#a6140c] text-xs font-bold hidden mt-2">Қате! Құпия сөз: admin</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="preloader" class="fixed inset-0 z-[100] bg-[#000000] flex flex-col items-center justify-center">
+        <h1 class="text-6xl md:text-8xl font-black text-[#ffffff] mb-10 tracking-widest uppercase flex gap-1">
+            <span class="letter slow-letter delay-1">A</span><span class="letter slow-letter delay-2">K</span>
+            <span class="letter fast-letter delay-3 ml-2">Z</span><span class="letter fast-letter delay-4">H</span><span class="letter fast-letter delay-5">A</span><span class="letter fast-letter delay-6">R</span>
+        </h1>
+        <div class="w-64 h-[4px] bg-[#333333] rounded-full overflow-hidden relative">
+            <div class="animate-line-sync absolute top-0 left-0 h-full bg-[#a6140c] shadow-[0_0_15px_rgba(166,20,12,0.8)]"></div>
+        </div>
+    </div>
+
+    <nav id="navbar" class="bg-[#000000]/95 backdrop-blur-md border-b border-[#a6140c] fixed w-full z-50 transform -translate-y-full transition-transform duration-1000">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center relative z-50">
+            <a href="index.html" class="text-2xl font-black tracking-tighter text-[#ffffff] flex items-center gap-2 hover:text-[#a6140c] transition">
+                AKZHAR.
+            </a>
+            
+            <div class="hidden md:flex space-x-10 text-sm font-bold uppercase tracking-wide text-[#ffffff] items-center">
+                <a href="index.html" class="nav-link active hover:text-[#a6140c] transition">Басты бет</a>
+                <a href="about.html" class="nav-link hover:text-[#a6140c] transition">Жоба туралы</a>
+                <a href="criteria.html" class="nav-link hover:text-[#a6140c] transition">Бағалау</a>
+                <a href="auth.html" class="flex items-center gap-2 bg-[#a6140c] text-white px-5 py-2 rounded-full hover:bg-[#ffffff] hover:text-[#000000] transition duration-300">
+                    <span>🔓</span> Кіру / Тіркелу
+                </a>
+            </div>
+
+            <button id="mobile-btn" class="md:hidden text-white focus:outline-none hover:text-[#a6140c] transition">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="mobile-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="fixed inset-0 bg-black/98 backdrop-blur-xl h-screen w-full flex flex-col items-center justify-center space-y-8 transform translate-x-full transition-transform duration-300 z-40 md:hidden">
+            <a href="index.html" class="text-2xl font-black text-[#a6140c] uppercase tracking-widest">Басты бет</a>
+            <a href="about.html" class="text-2xl font-bold text-white hover:text-[#a6140c] uppercase tracking-widest transition">Жоба туралы</a>
+            <a href="criteria.html" class="text-2xl font-bold text-white hover:text-[#a6140c] uppercase tracking-widest transition">Бағалау</a>
+            <a href="auth.html" class="mt-8 flex items-center gap-2 bg-[#a6140c] text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest">
+                <span>🔓</span> Кіру / Тіркелу
+            </a>
+        </div>
+    </nav>
+
+    <header class="h-screen flex items-center justify-center text-center text-[#ffffff] px-6">
+        <div class="max-w-4xl" data-aos="fade-up" data-aos-duration="1000">
+            <span class="text-xs font-bold tracking-[0.3em] text-[#a6140c] bg-white/10 backdrop-blur px-4 py-1 rounded mb-6 inline-block uppercase">Педагогикалық Практика</span>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">ЖАСАНДЫ ИНТЕЛЛЕКТ</h1>
+            <p class="text-lg md:text-xl mb-10 font-normal text-gray-300 max-w-xl mx-auto leading-relaxed">
+                Болашақ мұғалімнің цифрлық көмекшісі. <br> Сабақ жоспарын құру мен бағалауды автоматтандырыңыз.
+            </p>
+            
+            <div class="flex flex-col items-center gap-6 mt-12" data-aos="fade-up" data-aos-delay="400">
+                <a href="about.html" class="group relative inline-flex items-center justify-center px-10 py-5 font-black text-white transition-all duration-300 bg-[#a6140c] rounded-full hover:bg-white hover:text-black focus:outline-none shadow-[0_0_30px_rgba(166,20,12,0.4)]" role="button">
+                    <span class="absolute inset-0 rounded-full bg-[#a6140c] opacity-40 animate-ping group-hover:hidden"></span>
+                    <span class="relative flex items-center gap-3 tracking-wider uppercase text-sm">
+                        Инновацияға қадам жасау
+                        <svg class="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </span>
+                </a>
+                <div class="flex items-center gap-2 text-gray-500 text-xs font-bold tracking-[0.2em] uppercase">
+                    <span class="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    600+ қолдануда
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-24 container mx-auto px-6">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <span class="text-[#a6140c] font-bold tracking-widest uppercase text-sm">Құралдар</span>
+            <h2 class="text-3xl md:text-4xl font-black mt-2">Курс бағдарламасы</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="bg-[#ffffff] p-8 rounded-xl border-l-4 border-[#000000] hover:border-[#a6140c] transition duration-300 group shadow-sm" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition duration-300">🤖</div>
+                <h3 class="text-xl font-bold mb-2">ChatGPT</h3>
+                <p class="text-gray-500 text-sm">Сабақ жоспарлары, идеялар, сценарийлер жазу.</p>
+            </div>
+            <div class="bg-[#ffffff] p-8 rounded-xl border-l-4 border-[#000000] hover:border-[#a6140c] transition duration-300 group shadow-sm" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition duration-300">📝</div>
+                <h3 class="text-xl font-bold mb-2">Twee</h3>
+                <p class="text-gray-500 text-sm">Ағылшын тілі сабақтарына арналған тапсырмалар.</p>
+            </div>
+            <div class="bg-[#ffffff] p-8 rounded-xl border-l-4 border-[#000000] hover:border-[#a6140c] transition duration-300 group shadow-sm" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition duration-300">📊</div>
+                <h3 class="text-xl font-bold mb-2">Gamma</h3>
+                <p class="text-gray-500 text-sm">Бірнеше минут ішінде дайын презентациялар.</p>
+            </div>
+            <div class="bg-[#ffffff] p-8 rounded-xl border-l-4 border-[#000000] hover:border-[#a6140c] transition duration-300 group shadow-sm" data-aos="fade-up" data-aos-delay="400">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition duration-300">🎮</div>
+                <h3 class="text-xl font-bold mb-2">Quizizz AI</h3>
+                <p class="text-gray-500 text-sm">Интерактивті ойындар мен викториналар.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-[#ffffff]">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-[#a6140c] font-bold tracking-widest uppercase text-sm">Көмек</span>
+                <h2 class="text-3xl md:text-4xl font-black mt-2 text-[#000000]">Жиі қойылатын сұрақтар</h2>
+            </div>
+            <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="faq-item bg-[#efefef] rounded-xl border border-gray-200 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="p-6 flex justify-between items-center">
+                        <h3 class="font-bold text-lg text-[#000000]">Бұл құралдар ақылы ма?</h3>
+                        <span class="faq-icon text-2xl transition duration-300">+</span>
+                    </div>
+                    <div class="faq-content bg-[#fafafa]">
+                        <div class="p-6 pt-0 text-gray-600 text-sm leading-relaxed">Көпшілік құралдардың (ChatGPT, Gamma, Quizizz) тегін нұсқалары бар. Практика кезінде тегін нұсқалар толығымен жеткілікті.</div>
+                    </div>
+                </div>
+                <div class="faq-item bg-[#efefef] rounded-xl border border-gray-200 overflow-hidden cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="p-6 flex justify-between items-center">
+                        <h3 class="font-bold text-lg text-[#000000]">Телефонмен жасауға болады ма?</h3>
+                        <span class="faq-icon text-2xl transition duration-300">+</span>
+                    </div>
+                    <div class="faq-content bg-[#fafafa]">
+                        <div class="p-6 pt-0 text-gray-600 text-sm leading-relaxed">Иә, барлық сервистердің мобильді нұсқасы бар. Дегенмен, презентацияларды компьютерде жасаған ыңғайлырақ.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 container mx-auto px-6 max-w-4xl" data-aos="fade-up">
+        <div class="bg-[#000000] text-white rounded-3xl p-10 md:p-16 shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-[#a6140c] opacity-20 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
+                <div>
+                    <span class="text-[#a6140c] font-bold tracking-widest uppercase text-sm">Байланыс</span>
+                    <h2 class="text-4xl font-black mt-2 mb-6">Сұрағыңыз бар ма?</h2>
+                    <p class="text-gray-400 leading-relaxed mb-8">Курс бойынша ұсыныстарыңыз болса немесе көмек қажет болса, бізге жазыңыз.</p>
+                    <div class="flex items-center gap-4 text-gray-300">
+                        <div class="w-10 h-10 bg-[#a6140c] rounded-full flex items-center justify-center">✉</div>
+                        <span>support@akzhar-legenda.com</span>
+                    </div>
+                </div>
+                <form id="contactForm" class="space-y-4" onsubmit="sendFeedback(event)">
+                    <input type="text" placeholder="Аты-жөні" required class="w-full bg-[#1a1a1a] border border-[#333333] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[#a6140c] transition placeholder-gray-500">
+                    <input type="email" placeholder="Email" required class="w-full bg-[#1a1a1a] border border-[#333333] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[#a6140c] transition placeholder-gray-500">
+                    <textarea rows="4" placeholder="Хабарлама..." required class="w-full bg-[#1a1a1a] border border-[#333333] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[#a6140c] transition placeholder-gray-500"></textarea>
+                    <button type="submit" id="submitBtn" class="w-full bg-[#a6140c] text-white font-bold py-3 rounded-lg hover:bg-[#ffffff] hover:text-[#000000] transition transform hover:scale-[1.02]">Жіберу</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#000000] text-[#ffffff] py-16 text-center">
+        <h2 class="text-3xl font-black tracking-tighter mb-4 text-[#ffffff]">AKZHAR<span class="text-[#a6140c]">.</span></h2>
+        <div class="w-16 h-1 bg-[#a6140c] mx-auto mb-6"></div>
+        <p class="text-gray-500 text-xs uppercase tracking-widest">&copy; 2026 Барлық құқықтар қорғалған</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 50 });
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').style.transform = 'translateY(-100%)';
+                document.getElementById('navbar').classList.remove('-translate-y-full');
+                document.getElementById('main-body').classList.remove('overflow-hidden');
+            }, 2500); 
+        });
+
+        function openModal() { document.getElementById('loginModal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('loginModal').classList.add('hidden'); document.getElementById('errorMsg').classList.add('hidden'); }
+        function checkLogin(e) { e.preventDefault(); if(document.getElementById('passwordInput').value === 'admin') window.location.href = 'videos.html'; else document.getElementById('errorMsg').classList.remove('hidden'); }
+        
+        function toggleFaq(element) {
+            const allItems = document.querySelectorAll('.faq-item');
+            allItems.forEach(item => { if (item !== element) item.classList.remove('active'); });
+            element.classList.toggle('active');
+        }
+
+        function sendFeedback(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const form = document.getElementById('contactForm');
+            btn.innerHTML = 'Жіберілуде...';
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            setTimeout(() => {
+                btn.innerHTML = '✔ Сәтті жіберілді!';
+                btn.classList.remove('bg-[#a6140c]', 'opacity-75', 'cursor-not-allowed', 'hover:bg-[#ffffff]', 'hover:text-[#000000]');
+                btn.classList.add('bg-green-600', 'cursor-default');
+                form.reset();
+                setTimeout(() => {
+                    btn.innerHTML = 'Жіберу';
+                    btn.classList.remove('bg-green-600', 'cursor-default');
+                    btn.classList.add('bg-[#a6140c]', 'hover:bg-[#ffffff]', 'hover:text-[#000000]');
+                }, 3000);
+            }, 1500);
+        }
+
+        // --- ЛОГИКА ДЛЯ МОБИЛЬНОГО МЕНЮ (ГАМБУРГЕР) ---
+        const mobileBtn = document.getElementById('mobile-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileIcon = document.getElementById('mobile-icon');
+        let isMenuOpen = false;
+
+        if(mobileBtn) {
+            mobileBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    mobileIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // Иконка "Крестик"
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Иконка "Гамбургер"
+                }
+            });
+        }
+    </script>
+</body>
+</html>
