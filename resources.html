@@ -36,6 +36,12 @@
         /* Скроллбар для мобильных табов */
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Красивый скроллбар для промптов */
+        .prompt-scroll::-webkit-scrollbar { width: 6px; }
+        .prompt-scroll::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        .prompt-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+        .prompt-scroll::-webkit-scrollbar-thumb:hover { background: #a6140c; }
     </style>
     <script>
         if (!localStorage.getItem('currentUser')) {
@@ -88,7 +94,7 @@
             <div class="flex justify-start md:justify-center gap-6 border-b border-gray-600 pb-4 max-w-2xl mx-auto mt-4 overflow-x-auto hide-scroll whitespace-nowrap px-2">
                 <button onclick="showTab('videos')" id="btn-videos" class="text-base md:text-lg font-bold pb-2 border-b-4 border-[#a6140c] text-white transition">Бейнесабақтар</button>
                 <button onclick="showTab('prompts')" id="btn-prompts" class="text-base md:text-lg font-bold pb-2 border-b-4 border-transparent text-gray-400 hover:text-white transition">Промпттар</button>
-                <button onclick="showTab('platforms')" id="btn-platforms" class="text-base md:text-lg font-bold pb-2 border-b-4 border-transparent text-gray-400 hover:text-white transition flex items-center gap-2">Платформалар</button>
+                <button onclick="showTab('platforms')" id="btn-platforms" class="text-base md:text-lg font-bold pb-2 border-b-4 border-transparent text-gray-400 hover:text-white transition flex items-center gap-2">Платформалар <span class="text-xl">🚀</span></button>
             </div>
         </div>
 
@@ -153,70 +159,61 @@
             </div>
         </div>
 
-        <div id="tab-prompts" class="tab-content text-black max-w-6xl mx-auto"> 
+        <div id="tab-prompts" class="tab-content text-white max-w-6xl mx-auto"> 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-3">📝 Сабақ жоспары</h3>
-                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Маған [Пән] пәнінен [Сынып] сыныбына арналған "[Тақырып]" тақырыбы бойынша Қысқа Мерзімді Жоспар (ҚМЖ) жасап бер.</div>
-                    </div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
+                
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition duration-300 flex flex-col h-full">
+                    <h3 class="font-bold text-white text-lg mb-3">📝 Сабақ жоспары</h3>
+                    <div class="prompt-scroll bg-black/40 border border-white/10 p-4 rounded-lg text-sm text-gray-300 font-mono mb-4 h-32 overflow-y-auto leading-relaxed">Маған [Пән] пәнінен [Сынып] сыныбына арналған "[Тақырып]" тақырыбы бойынша Қысқа Мерзімді Жоспар (ҚМЖ) жасап бер.</div>
+                    <button onclick="copyText(this)" class="mt-auto w-full bg-[#a6140c] text-white py-2.5 rounded-lg font-bold hover:bg-white hover:text-black transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-3">✅ Тест құру</h3>
-                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Төмендегі мәтін негізінде [Сынып] сыныбына арналған 5 тест сұрағын құрастыр. Әр сұрақта 4 жауап нұсқасы болсын.</div>
-                    </div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
+
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition duration-300 flex flex-col h-full">
+                    <h3 class="font-bold text-white text-lg mb-3">✅ Тест құру</h3>
+                    <div class="prompt-scroll bg-black/40 border border-white/10 p-4 rounded-lg text-sm text-gray-300 font-mono mb-4 h-32 overflow-y-auto leading-relaxed">Төмендегі мәтін негізінде [Сынып] сыныбына арналған 5 тест сұрағын құрастыр. Әр сұрақта 4 жауап нұсқасы болсын.</div>
+                    <button onclick="copyText(this)" class="mt-auto w-full bg-[#a6140c] text-white py-2.5 rounded-lg font-bold hover:bg-white hover:text-black transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-3">💡 Сергіту сәті</h3>
-                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">[Тақырып] тақырыбына қатысты 5 минуттық қызықты, балаларды қозғалысқа келтіретін сергіту ойынының идеясын ұсын.</div>
-                    </div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
+
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition duration-300 flex flex-col h-full">
+                    <h3 class="font-bold text-white text-lg mb-3">💡 Сергіту сәті</h3>
+                    <div class="prompt-scroll bg-black/40 border border-white/10 p-4 rounded-lg text-sm text-gray-300 font-mono mb-4 h-32 overflow-y-auto leading-relaxed">[Тақырып] тақырыбына қатысты 5 минуттық қызықты, балаларды қозғалысқа келтіретін сергіту ойынының идеясын ұсын.</div>
+                    <button onclick="copyText(this)" class="mt-auto w-full bg-[#a6140c] text-white py-2.5 rounded-lg font-bold hover:bg-white hover:text-black transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                 <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#000000] hover:border-[#a6140c] hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-3">👶 Түсіндіру</h3>
-                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Маған [Күрделі термин] туралы 10 жасар балаға түсіндіргендей қарапайым мысалдармен (аналогиямен) жазып бер.</div>
-                    </div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
+
+                 <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition duration-300 flex flex-col h-full">
+                    <h3 class="font-bold text-white text-lg mb-3">👶 Түсіндіру</h3>
+                    <div class="prompt-scroll bg-black/40 border border-white/10 p-4 rounded-lg text-sm text-gray-300 font-mono mb-4 h-32 overflow-y-auto leading-relaxed">Маған [Күрделі термин] туралы 10 жасар балаға түсіндіргендей қарапайым мысалдармен (аналогиямен) жазып бер.</div>
+                    <button onclick="copyText(this)" class="mt-auto w-full bg-[#a6140c] text-white py-2.5 rounded-lg font-bold hover:bg-white hover:text-black transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-3">📊 Рубрика жасау</h3>
-                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">"[Жоба/Эссе тақырыбы]" бойынша оқушыларды бағалауға арналған кесте (рубрика) жасап бер. Критерийлер: Мазмұны, Дизайны.</div>
-                    </div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
+
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition duration-300 flex flex-col h-full">
+                    <h3 class="font-bold text-white text-lg mb-3">📊 Рубрика жасау</h3>
+                    <div class="prompt-scroll bg-black/40 border border-white/10 p-4 rounded-lg text-sm text-gray-300 font-mono mb-4 h-32 overflow-y-auto leading-relaxed">"[Жоба/Эссе тақырыбы]" бойынша оқушыларды бағалауға арналған кесте (рубрика) жасап бер. Критерийлер: Мазмұны, Дизайны.</div>
+                    <button onclick="copyText(this)" class="mt-auto w-full bg-[#a6140c] text-white py-2.5 rounded-lg font-bold hover:bg-white hover:text-black transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-3">📩 Ата-анаға хат</h3>
-                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Оқушының үлгерімі төмендеп кеткені туралы ата-анасына сыпайы, бірақ ресми ескерту хатын жазып бер.</div>
-                    </div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
+
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition duration-300 flex flex-col h-full">
+                    <h3 class="font-bold text-white text-lg mb-3">📩 Ата-анаға хат</h3>
+                    <div class="prompt-scroll bg-black/40 border border-white/10 p-4 rounded-lg text-sm text-gray-300 font-mono mb-4 h-32 overflow-y-auto leading-relaxed">Оқушының үлгерімі төмендеп кеткені туралы ата-анасына сыпайы, бірақ ресми ескерту хатын жазып бер.</div>
+                    <button onclick="copyText(this)" class="mt-auto w-full bg-[#a6140c] text-white py-2.5 rounded-lg font-bold hover:bg-white hover:text-black transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-3">🧩 Саралау (Diff)</h3>
-                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">"[Тақырып]" тақырыбы бойынша А (оңай), В (орташа), С (күрделі) деңгейіндегі 3 түрлі тапсырма құрастыр.</div>
-                    </div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
+
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition duration-300 flex flex-col h-full">
+                    <h3 class="font-bold text-white text-lg mb-3">🧩 Саралау (Diff)</h3>
+                    <div class="prompt-scroll bg-black/40 border border-white/10 p-4 rounded-lg text-sm text-gray-300 font-mono mb-4 h-32 overflow-y-auto leading-relaxed">"[Тақырып]" тақырыбы бойынша А (оңай), В (орташа), С (күрделі) деңгейіндегі 3 түрлі тапсырма құрастыр.</div>
+                    <button onclick="copyText(this)" class="mt-auto w-full bg-[#a6140c] text-white py-2.5 rounded-lg font-bold hover:bg-white hover:text-black transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-3">💬 Кері байланыс</h3>
-                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">Эссеге "Сэндвич әдісі" (мақтау - түзету - мақтау) бойынша конструктивті кері байланыс үлгісін жазып бер.</div>
-                    </div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
+
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition duration-300 flex flex-col h-full">
+                    <h3 class="font-bold text-white text-lg mb-3">💬 Кері байланыс</h3>
+                    <div class="prompt-scroll bg-black/40 border border-white/10 p-4 rounded-lg text-sm text-gray-300 font-mono mb-4 h-32 overflow-y-auto leading-relaxed">Эссеге "Сэндвич әдісі" (мақтау - түзету - мақтау) бойынша конструктивті кері байланыс үлгісін жазып бер.</div>
+                    <button onclick="copyText(this)" class="mt-auto w-full bg-[#a6140c] text-white py-2.5 rounded-lg font-bold hover:bg-white hover:text-black transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-[#a6140c] hover:border-black hover:scale-[1.02] transition duration-300 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-lg mb-3">🧠 Блум таксономиясы</h3>
-                        <div class="bg-gray-100 p-3 rounded text-sm text-gray-600 font-mono mb-4 h-32 overflow-y-auto">"[Тақырып]" бойынша Блум таксономиясының 6 деңгейіне (білу, түсіну, қолдану, талдау, жинақтау, бағалау) 1-1 сұрақтан құрастырып бер.</div>
-                    </div>
-                    <button onclick="copyText(this)" class="w-full bg-black text-white py-2 rounded font-bold hover:bg-[#a6140c] transition uppercase text-xs tracking-wider">Көшіру</button>
+
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 hover:border-[#a6140c] hover:bg-white/15 transition duration-300 flex flex-col h-full">
+                    <h3 class="font-bold text-white text-lg mb-3">🧠 Блум таксономиясы</h3>
+                    <div class="prompt-scroll bg-black/40 border border-white/10 p-4 rounded-lg text-sm text-gray-300 font-mono mb-4 h-32 overflow-y-auto leading-relaxed">"[Тақырып]" бойынша Блум таксономиясының 6 деңгейіне (білу, түсіну, қолдану, талдау, жинақтау, бағалау) 1-1 сұрақтан құрастырып бер.</div>
+                    <button onclick="copyText(this)" class="mt-auto w-full bg-[#a6140c] text-white py-2.5 rounded-lg font-bold hover:bg-white hover:text-black transition uppercase text-xs tracking-wider">Көшіру</button>
                 </div>
             </div>
         </div>
@@ -289,6 +286,12 @@
 
     </div>
 
+    <footer class="bg-[#000000] text-[#ffffff] py-16 text-center mt-12 border-t border-white/10 relative z-10">
+        <h2 class="text-3xl font-black tracking-tighter mb-4 text-[#ffffff]">AKZHAR<span class="text-[#a6140c]">.</span></h2>
+        <div class="w-16 h-1 bg-[#a6140c] mx-auto mb-6"></div>
+        <p class="text-gray-500 text-xs uppercase tracking-widest">&copy; 2026 Барлық құқықтар қорғалған</p>
+    </footer>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
@@ -308,14 +311,10 @@
             window.location.href = 'index.html';
         }
 
-        // --- ЖАҢАРТЫЛҒАН TABS ЛОГИКАСЫ (3 Вкладка) ---
         function showTab(tab) {
-            // Барлық контентті жасыру
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            // Таңдалғанын көрсету
             document.getElementById('tab-' + tab).classList.add('active');
 
-            // Барлық батырмалардың дизайнын қалпына келтіру
             const tabs = ['videos', 'prompts', 'platforms'];
             tabs.forEach(t => {
                 const btn = document.getElementById('btn-' + t);
@@ -332,10 +331,10 @@
             navigator.clipboard.writeText(text);
             const original = btn.innerText;
             btn.innerText = "Көшірілді!";
-            btn.classList.replace('bg-black', 'bg-green-600');
+            btn.classList.replace('bg-[#a6140c]', 'bg-green-600');
             setTimeout(() => {
                 btn.innerText = original;
-                btn.classList.replace('bg-green-600', 'bg-black');
+                btn.classList.replace('bg-green-600', 'bg-[#a6140c]');
             }, 2000);
         }
 
@@ -361,5 +360,3 @@
     </script>
 </body>
 </html>
-
-
