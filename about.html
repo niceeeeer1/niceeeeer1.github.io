@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="kk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKZHAR - Жоба туралы</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        
+        /* Убираем скролл по горизонтали */
+        html, body { font-family: 'Inter', sans-serif; color: white; overflow-x: hidden; width: 100%; }
+
+        /* --- ФОНОВОЕ ВИДЕО --- */
+        .video-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: -10; /* Затемнение под лампой */
+        }
+
+        /* --- ОҢТАЙЛАНДЫРЫЛҒАН ЛАМПА --- */
+        #the-lamp {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(166,20,12,0.6) 0%, rgba(166,20,12,0) 70%);
+            filter: blur(100px);
+            z-index: -5; /* Лампа между фоном и карточками */
+            pointer-events: none;
+            will-change: transform, opacity, filter;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .nav-link { position: relative; padding-bottom: 4px; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #a6140c; transition: width 0.3s ease-out; }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active::after { width: 100%; }
+    </style>
+</head>
+<body id="main-body">
+
+    <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-cover -z-20 hidden md:block" poster="images/bg-poster.jpg">
+        <source src="videos/background.mp4" type="video/mp4">
+    </video>
+    <div class="fixed top-0 left-0 w-full h-full object-cover -z-20 md:hidden" style="background: url('images/bg-poster.jpg') center/cover;"></div>
+    <div class="video-overlay"></div>
+
+    <div id="the-lamp"></div>
+
+    <nav id="navbar" class="bg-[#000000]/80 backdrop-blur-md border-b border-[#a6140c] fixed top-0 w-full z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center relative z-50">
+            <a href="index.html" class="text-2xl font-black tracking-tighter text-white flex items-center gap-2 hover:text-[#a6140c] transition">
+                AKZHAR.
+            </a>
+            
+            <div class="hidden md:flex space-x-10 text-sm font-bold uppercase tracking-wide text-white items-center">
+                <a href="index.html" class="nav-link hover:text-[#a6140c] transition">Басты бет</a>
+                <a href="about.html" class="nav-link active text-[#a6140c] transition">Жоба туралы</a>
+                <a href="criteria.html" class="nav-link hover:text-[#a6140c] transition">Бағалау</a>
+                <a href="auth.html" class="flex items-center gap-2 bg-[#a6140c] text-white px-5 py-2 rounded-full hover:bg-white hover:text-black transition duration-300">
+                    <span>🔏</span> Кіру / Тіркелу
+                </a>
+            </div>
+
+            <button id="mobile-btn" class="md:hidden text-white focus:outline-none hover:text-[#a6140c] transition">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="mobile-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="fixed inset-0 bg-[#050505] z-40 h-screen w-full flex flex-col items-center justify-center space-y-8 transform translate-x-full transition-transform duration-300 md:hidden">
+            <a href="index.html" class="text-2xl font-bold text-white hover:text-[#a6140c] uppercase tracking-widest transition">Басты бет</a>
+            <a href="about.html" class="text-2xl font-black text-[#a6140c] uppercase tracking-widest transition">Жоба туралы</a>
+            <a href="criteria.html" class="text-2xl font-bold text-white hover:text-[#a6140c] uppercase tracking-widest transition">Бағалау</a>
+            <a href="auth.html" class="mt-8 flex items-center gap-2 bg-[#a6140c] text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest">
+                <span>🔏</span> Кіру / Тіркелу
+            </a>
+        </div>
+    </nav>
+
+    <div class="pt-40 pb-20 flex flex-col items-center text-center container mx-auto px-6 relative z-10">
+        <span class="text-xs font-bold tracking-[0.3em] text-[#a6140c] bg-white/10 backdrop-blur px-4 py-1 rounded mb-4 uppercase" data-aos="fade-down">Инновация</span>
+        
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white mb-6 bg-white/10 backdrop-blur-md px-8 py-4 rounded-3xl border border-white/20 shadow-2xl" data-aos="zoom-in">
+            Жобаның <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#a6140c] to-yellow-500">Жүрегі</span>
+        </h1>
+    </div>
+
+    <div class="container mx-auto px-6 max-w-5xl space-y-16 pb-32 relative z-10">
+        
+        <section class="glass-card p-10 rounded-3xl" data-aos="fade-up">
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold mb-4 text-white">Кіріспе</h2>
+                    <p class="text-gray-300 leading-7 text-lg">Жасанды интеллект (ЖИ) – қазіргі білім беру саласындағы ең маңызды инновациялық құралдардың бірі. Бұл платформа студент-практиканттарға күнделікті рутиналық жұмыстарды автоматтандыруға, сабақ жоспарларын лезде құруға мүмкіндік береді.</p>
+                </div>
+                <div class="md:w-1/2 flex justify-center"><div class="text-8xl drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">🤖</div></div>
+            </div>
+        </section>
+
+        <section class="glass-card p-10 rounded-3xl text-center" data-aos="fade-up">
+            <span class="text-4xl mb-4 block drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">🎯</span>
+            <h2 class="text-3xl font-bold mb-6 text-white">Жобаның Мақсаты</h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Студенттердің цифрлық сауаттылығын арттыру және педагогикалық практика барысында жасанды интеллект құралдарын (ChatGPT, Twee, Gamma) кәсіби деңгейде қолдануды үйрету.</p>
+        </section>
+
+        <section data-aos="fade-up">
+            <h2 class="text-3xl font-bold mb-8 text-center text-white">Міндеттері</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card p-6 rounded-2xl flex items-center gap-4"><span class="text-yellow-400 text-2xl font-bold">01</span><p class="text-gray-300">Промпт жазу дағдыларын қалыптастыру.</p></div>
+                <div class="glass-card p-6 rounded-2xl flex items-center gap-4"><span class="text-yellow-400 text-2xl font-bold">02</span><p class="text-gray-300">Сабақ жоспарларын жылдам әзірлеу.</p></div>
+                <div class="glass-card p-6 rounded-2xl flex items-center gap-4"><span class="text-yellow-400 text-2xl font-bold">03</span><p class="text-gray-300">Ақпаратты сыни тұрғыдан талдау.</p></div>
+                <div class="glass-card p-6 rounded-2xl flex items-center gap-4"><span class="text-yellow-400 text-2xl font-bold">04</span><p class="text-gray-300">Цифрлық этиканы сақтау.</p></div>
+            </div>
+        </section>
+
+        <section class="glass-card p-12 rounded-3xl border-l-8 border-yellow-500" data-aos="fade-up">
+            <h2 class="text-3xl font-bold mb-6 text-white">Өзектілігі</h2>
+            <p class="text-gray-300 text-lg leading-relaxed">Қазіргі таңда ақпарат ағыны өте жылдам. Мұғалімдерге қағазбастылықтан арылып, уақытын балалармен шығармашылық жұмысқа арнау қажет. ЖИ құралдарын меңгеру – болашақ педагогтің бәсекеге қабілеттілігінің басты көрсеткіші.</p>
+        </section>
+
+        <section class="text-center py-10" data-aos="zoom-in">
+            <h2 class="text-4xl font-black mb-8 text-yellow-400 drop-shadow-[0_0_20px_rgba(250,204,21,0.5)]">Күтілетін Нәтиже</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-2xl"><div class="text-5xl mb-4">🚀</div><h3 class="font-bold text-xl text-white">Уақыт</h3><p class="text-sm text-gray-400 mt-2">Дайындық уақыты 3 есе қысқарады</p></div>
+                <div class="glass-card p-8 rounded-2xl border-yellow-500/50"><div class="text-5xl mb-4">💡</div><h3 class="font-bold text-xl text-white">Сапа</h3><p class="text-sm text-gray-400 mt-2">Бірегей әрі қызықты сабақтар</p></div>
+                <div class="glass-card p-8 rounded-2xl"><div class="text-5xl mb-4">🎓</div><h3 class="font-bold text-xl text-white">Кәсібилік</h3><p class="text-sm text-gray-400 mt-2">Жаңа формациядағы педагог</p></div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="bg-black text-white py-12 text-center border-t border-white/10 relative z-10">
+        <h2 class="text-3xl font-black tracking-tighter mb-4 text-white">AKZHAR<span class="text-[#a6140c]">.</span></h2>
+        <div class="w-16 h-1 bg-[#a6140c] mx-auto mb-6"></div>
+        <p class="text-gray-500 text-xs uppercase tracking-widest">&copy; 2026 Барлық құқықтар қорғалған</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 600, once: true });
+
+        // --- ЛАМПА ЛОГИКАСЫ (Ол енді видеоның үстінен жарқырайды) ---
+        const lamp = document.getElementById('the-lamp');
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const totalHeight = document.body.scrollHeight - window.innerHeight;
+                    let progress = window.scrollY / totalHeight;
+                    if (progress > 1) progress = 1;
+                    const scale = 1 + (progress * 1.5);
+                    const opacity = 0.4 + (progress * 0.4);
+                    const hueRotate = progress * 60; 
+                    lamp.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                    lamp.style.opacity = opacity;
+                    lamp.style.filter = `blur(100px) hue-rotate(${hueRotate}deg)`;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // --- МОБИЛЬДІ МӘЗІР ЛОГИКАСЫ ---
+        const mobileBtn = document.getElementById('mobile-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileIcon = document.getElementById('mobile-icon');
+        let isMenuOpen = false;
+
+        if(mobileBtn) {
+            mobileBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    mobileIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); 
+                    document.body.style.overflow = 'hidden'; 
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); 
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
