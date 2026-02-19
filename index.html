@@ -9,7 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
         
-        /* БАСТЫ ШЕШІМ: Оң жақтағы бос орынды алып тастайды */
+        /* Убираем боковой скролл на телефонах */
         html, body { 
             font-family: 'Inter', sans-serif; 
             -webkit-font-smoothing: antialiased; 
@@ -17,7 +17,7 @@
             width: 100%; 
         }
         
-        /* CSS Animations */
+        /* Анимации */
         #preloader { transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); will-change: transform; }
         nav { transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1); }
         
@@ -45,11 +45,9 @@
 </head>
 <body class="bg-[#efefef] text-[#000000] overflow-hidden" id="main-body">
 
-    <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-cover -z-20 hidden md:block" poster="images/bg-poster.jpg">
+    <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-cover -z-20" poster="images/bg-poster.jpg">
         <source src="videos/background.mp4" type="video/mp4">
     </video>
-
-    <div class="fixed top-0 left-0 w-full h-full object-cover -z-20 md:hidden" style="background: url('images/bg-poster.jpg') center/cover;"></div>
 
     <div class="fixed top-0 left-0 w-full h-full bg-black/70 -z-10"></div>
 
@@ -104,7 +102,7 @@
             </button>
         </div>
 
-        <div id="mobile-menu" class="fixed inset-0 bg-black/98 backdrop-blur-xl h-screen w-full flex flex-col items-center justify-center space-y-8 transform translate-x-full transition-transform duration-300 z-40 md:hidden">
+        <div id="mobile-menu" class="fixed inset-0 bg-[#050505] z-40 h-screen w-full flex flex-col items-center justify-center space-y-8 transform translate-x-full transition-transform duration-300 md:hidden">
             <a href="index.html" class="text-2xl font-black text-[#a6140c] uppercase tracking-widest">Басты бет</a>
             <a href="about.html" class="text-2xl font-bold text-white hover:text-[#a6140c] uppercase tracking-widest transition">Жоба туралы</a>
             <a href="criteria.html" class="text-2xl font-bold text-white hover:text-[#a6140c] uppercase tracking-widest transition">Бағалау</a>
@@ -235,7 +233,7 @@
                 document.getElementById('preloader').style.transform = 'translateY(-100%)';
                 document.getElementById('navbar').classList.remove('-translate-y-full');
                 
-                // Remove overflow-hidden after preloader is done to allow normal scrolling
+                // Скролл қайта қосылады
                 document.getElementById('main-body').style.overflowY = 'auto';
             }, 2500); 
         });
@@ -269,7 +267,7 @@
             }, 1500);
         }
 
-        // --- ЛОГИКА ДЛЯ МОБИЛЬНОГО МЕНЮ (ГАМБУРГЕР) ---
+        // --- ЛОГИКА ДЛЯ МОБИЛЬНОГО МЕНЮ ---
         const mobileBtn = document.getElementById('mobile-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileIcon = document.getElementById('mobile-icon');
@@ -280,13 +278,11 @@
                 isMenuOpen = !isMenuOpen;
                 if (isMenuOpen) {
                     mobileMenu.classList.remove('translate-x-full');
-                    mobileIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // Иконка "Крестик"
-                    // Prevent background scrolling when menu is open
+                    mobileIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); 
                     document.body.style.overflow = 'hidden'; 
                 } else {
                     mobileMenu.classList.add('translate-x-full');
-                    mobileIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Иконка "Гамбургер"
-                    // Restore background scrolling
+                    mobileIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); 
                     document.body.style.overflow = '';
                 }
             });
